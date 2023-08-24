@@ -1,5 +1,28 @@
+import pandas as pd
 import numpy as np
+import os
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+
+root_path = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(root_path, "..", "..", "data")
+file_path = os.path.join(data_dir, "census.csv")
+output_path = os.path.join(data_dir, "census_no_spaces.csv")
+
+def clean_data(file_path: str, output_path: str) -> None:
+    """
+    Clean the data by removing spaces in column names and save the cleaned dataset.
+
+    Args:
+    file_path : str
+        Path to the input data file.
+    output_path : str
+        Path to save the cleaned dataset.
+    """
+    df = pd.read_csv(file_path)
+    df.columns = df.columns.str.replace(' ', '')
+    df.to_csv(output_path, index=False)
+
+clean_data(file_path, output_path)
 
 
 def process_data(

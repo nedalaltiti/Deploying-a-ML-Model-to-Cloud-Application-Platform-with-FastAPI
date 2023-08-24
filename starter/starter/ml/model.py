@@ -1,9 +1,8 @@
 """
-Author: Nedal Altiti
-Date: 08/23/2023
-
 This module contains the training, metrics and inference of machine learning model.
 
+Author: Nedal Altiti
+Date: 23 / 08 / 2023
 """
 import pandas as pd
 from sklearn.metrics import fbeta_score, precision_score, recall_score, confusion_matrix
@@ -124,13 +123,13 @@ def compute_score_per_slice(test_df, categorical_feature, y, y_pred):
     Compute the performance on slices for a given categorical feature
     a slice corresponds to one value option of the categorical feature analyzed
     ------
-    df: 
+    test_df: 
         test dataframe pre-processed with features as column used for slices
-    feature:
+    categorical_feature:
         feature on which to perform the slices
     y : np.array
         corresponding known labels, binarized.
-    preds : np.array
+    y_pred : np.array
         Predicted labels, binarized
 
     Returns
@@ -159,7 +158,7 @@ def compute_score_per_slice(test_df, categorical_feature, y, y_pred):
         perf_df.at[option, 'fbeta'] = fbeta
 
     # reorder columns in performance dataframe
-    perf_df.reset_index(names='feature value', inplace=True)
+    perf_df.reset_index(names='feature variable', inplace=True)
     colList = list(perf_df.columns)
     colList[0], colList[1] =  colList[1], colList[0]
     perf_df = perf_df[colList]
