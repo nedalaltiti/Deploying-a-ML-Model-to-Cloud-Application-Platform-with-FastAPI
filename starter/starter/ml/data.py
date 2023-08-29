@@ -2,6 +2,11 @@ import pandas as pd
 import numpy as np
 import os
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+import logging
+
+logging.basicConfig(level=logging.INFO,
+                    format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger()
 
 root_path = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(root_path, "..", "..", "data")
@@ -18,10 +23,12 @@ def clean_data(file_path: str, output_path: str) -> None:
     output_path : str
         Path to save the cleaned dataset.
     """
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, delimiter=',')
     df.columns = df.columns.str.replace(' ', '')
     df.to_csv(output_path, index=False)
+    return df
 
+logger.info("creating new cleaned data")
 clean_data(file_path, output_path)
 
 

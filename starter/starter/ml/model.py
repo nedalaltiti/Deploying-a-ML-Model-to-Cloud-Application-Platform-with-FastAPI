@@ -9,7 +9,6 @@ from sklearn.metrics import fbeta_score, precision_score, recall_score, confusio
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 import logging
-import multiprocessing
 
 
 logging.basicConfig(level=logging.INFO,
@@ -38,21 +37,19 @@ def train_model(X_train, y_train):
         'max_depth': [5, 10],
     }
 
-    njobs = multiprocessing.cpu_count() - 1
-    logging.info("Searching best hyperparameters on {} cores".format(njobs))
-
+    logging.info("Searching best hyperparameters using all available cores")
 
     rf = GridSearchCV(RandomForestClassifier(random_state=42),
-                       param_grid=parameters,
-                       cv=3,
-                       n_jobs=njobs,
-                       verbose=2,
-                       )
+                      param_grid=parameters,
+                      cv=3,
+                      n_jobs=-1,
+                      verbose=2
+                      )
     
-    rf = RandomForestClassifier(random_state = 42)
     rf.fit(X_train, y_train)
-    logging.info("********* Best parameters found ***********")
+    logging.info("******* **Best parameters found** *********")
     logging.info("BEST PARAMS: {}".format(rf.best_params_))
+    logging.info("BEST SCORE: {}".format(rf.best_score_))
 
     return rf
 
@@ -94,10 +91,6 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    if not model:
-        raise ValueError("Model RandomForestClassifier is none")
-    if not isinstance(model, RandomForestClassifier):
-        raise ValueError("Model is not type of RandomForestClassifier")
     y_pred = model.predict(X)
     return y_pred
 
