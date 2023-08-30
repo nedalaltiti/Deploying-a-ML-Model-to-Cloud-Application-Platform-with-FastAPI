@@ -8,6 +8,10 @@ from model import compute_model_metrics, inference
 from data import process_data
 import logging
 
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+
+
 @pytest.fixture(scope='module')
 def data():
     return pd.read_csv("../../data/census_no_spaces.csv")
