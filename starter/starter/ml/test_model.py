@@ -8,6 +8,9 @@ from model import compute_model_metrics, inference
 from data import process_data
 import logging
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logger = logging.getLogger()
+
 @pytest.fixture(scope='module')
 def data():
     return pd.read_csv("../../data/census_no_spaces.csv")
@@ -48,7 +51,7 @@ def test_import_data(data):
         assert data.shape[1] > 0
 
     except AssertionError as err:
-        logging.error(
+        logger.error(
         "Testing import_data: The file doesn't appear to have rows and columns")
         raise err
 
