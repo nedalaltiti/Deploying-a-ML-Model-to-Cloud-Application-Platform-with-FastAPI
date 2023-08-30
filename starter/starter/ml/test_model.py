@@ -49,7 +49,7 @@ def test_import_data(data):
     # Check the df shape
     try:
         assert data.shape[0] > 0
-        assert df.shape[1] > 0
+        assert data.shape[1] > 0
 
     except AssertionError as err:
         logging.error(
