@@ -134,7 +134,7 @@ logging.info(f"Confusion matrix:\n{cm}")
 
 # Compute performance on slices for categorical features
 # save results in a new txt file
-slice_savepath = "./slice_performance.txt"
+slice_savepath = "./slice_output.txt"
 remove_if_exists(slice_savepath)
 
 # iterate through the categorical features and save results to log and txt file
