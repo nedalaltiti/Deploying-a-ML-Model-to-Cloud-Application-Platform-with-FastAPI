@@ -6,7 +6,7 @@ import pickle
 import numpy as np
 from model import compute_model_metrics, inference
 from data import process_data
-
+import logging
 
 @pytest.fixture(scope='module')
 def data():
@@ -45,7 +45,7 @@ def test_import_data(data):
     # Check the df shape
     try:
         assert data.shape[0] > 0
-        assert data.shape[1] > 0
+        assert df.shape[1] > 0
 
     except AssertionError as err:
         logging.error(
