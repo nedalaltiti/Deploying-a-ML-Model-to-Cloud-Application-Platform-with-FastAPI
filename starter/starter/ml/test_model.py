@@ -4,17 +4,25 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import pickle
 import numpy as np
-from model import compute_model_metrics, inference
-from data import process_data
-import logging
+from .model import compute_model_metrics, inference
+from .data import process_data
+import os, logging
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 
+# Get the absolute path of the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the file path to the data file
+data_file_path = os.path.join(current_dir, "../../data/census_no_spaces.csv")
+
+# Construct the file path to the trained_model.pkl file
+model_file_path = os.path.join(current_dir, "../../model/trained_model.pkl")
 
 @pytest.fixture(scope='module')
 def data():
-    return pd.read_csv("../../data/census_no_spaces.csv")
+    return pd.read_csv(data_file_path)
 
 
 @pytest.fixture(scope="module")
@@ -49,7 +57,7 @@ def test_import_data(data):
     # Check the df shape
     try:
         assert data.shape[0] > 0
-        assert df.shape[1] > 0
+        assert data.shape[1] > 0
 
     except AssertionError as err:
         logging.error(
@@ -59,7 +67,7 @@ def test_import_data(data):
 
 def test_compute_model_metrics(training_data):
     X, y = training_data
-    model = pickle.load(open('../../model/trained_model.pkl', 'rb'))
+    model = pickle.load(open(model_file_path, 'rb'))
     preds = inference(model, X)
     precision, recall, fbeta = compute_model_metrics(y, preds)
     assert isinstance(precision, float)
@@ -68,7 +76,7 @@ def test_compute_model_metrics(training_data):
 
 def test_inference(training_data):
     X, y = training_data
-    model = pickle.load(open('../../model/trained_model.pkl', 'rb'))
+    model = pickle.load(open(model_file_path, 'rb'))
     y_pred = inference(model, X)
     assert y.shape == y_pred.shape and np.unique(y_pred).tolist() == [0, 1]
 

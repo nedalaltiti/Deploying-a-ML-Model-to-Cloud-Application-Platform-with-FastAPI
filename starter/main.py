@@ -8,9 +8,12 @@ import pandas as pd
 import numpy as np
 from starter.ml.data import process_data
 import logging, pickle
+import os
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Instantiate the app.
 app = FastAPI(title="Inference API",
@@ -57,15 +60,16 @@ async def predict(inference: InputData):
         "native_country",
     ]
 
-    model_path = "./model/trained_model.pkl"
+    model_path = os.path.join(current_dir, "model/trained_model.pkl")
     with open(model_path, "rb") as file:
         model = pickle.load(file)
+      
 
-    encoder_path = "./model/encoder.pkl"
+    encoder_path = os.path.join(current_dir, "model/encoder.pkl")
     with open(encoder_path, "rb") as file:
         encoder = pickle.load(file)
 
-    labelizer_path = "./model/labelizer.pkl"
+    labelizer_path = os.path.join(current_dir, "model/labelizer.pkl")
     with open(labelizer_path, "rb") as file:
         lb = pickle.load(file)
 
