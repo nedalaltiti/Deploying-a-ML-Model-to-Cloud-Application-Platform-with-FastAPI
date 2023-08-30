@@ -4,8 +4,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import pickle
 import numpy as np
-from model import compute_model_metrics, inference
-from data import process_data
+from .model import compute_model_metrics, inference
+from .data import process_data
 import logging
 
 
