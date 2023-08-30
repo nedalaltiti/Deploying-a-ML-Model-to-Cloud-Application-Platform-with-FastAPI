@@ -6,7 +6,7 @@ import pickle
 import numpy as np
 from .model import compute_model_metrics, inference
 from .data import process_data
-import logging
+import os, logging
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
