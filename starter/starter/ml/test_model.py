@@ -11,10 +11,15 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 
+# Get the absolute path of the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the file path to the data file
+data_file_path = os.path.join(current_dir, "../../data/census_no_spaces.csv")
 
 @pytest.fixture(scope='module')
 def data():
-    return pd.read_csv("../../data/census_no_spaces.csv")
+    return pd.read_csv(data_file_path)
 
 
 @pytest.fixture(scope="module")
