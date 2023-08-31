@@ -15,7 +15,7 @@ def test_say_welcome():
 
 def test_high_predictions():
     response = client.post("/inference/", 
-                json={"age": 35,
+                json={"age": 54,
                       "workclass": "Private",
                       "fnlgt": 220098,
                       "education": "HS-grad",

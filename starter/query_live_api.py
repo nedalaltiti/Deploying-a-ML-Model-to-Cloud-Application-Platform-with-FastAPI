@@ -3,7 +3,7 @@ import json
 
 # Load environment variables from .env file
 
-url = "http://localhost:8000/inference/"
+url = "https://census-classifier.onrender.com/inference"
 
 
 # explicit the sample to perform inference on

@@ -7,6 +7,7 @@ Date: 23 / 08/ 2023
 
 # Add the necessary imports for the starter code.
 import pandas as pd
+import numpy as np
 import os, pickle, logging
 from sklearn.model_selection import train_test_split
 from ml.data import process_data
@@ -99,7 +100,6 @@ X_test, y_test, _, _ = process_data(
     encoder=encoder,
     lb=lb
 )
-
 # check if trained model already exists
 savepath = '../model'
 filename = ['trained_model.pkl', 'encoder.pkl', 'labelizer.pkl']
@@ -143,3 +143,7 @@ for feature in cat_features:
     performance_df.to_csv(slice_savepath,  mode='a', index=False)
     logging.info(f"Performance on slice {feature}")
     logging.info(performance_df)
+
+
+
+unique_values, counts = np.unique(y_test, return_counts=True)

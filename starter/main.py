@@ -1,7 +1,6 @@
 """
 This script for Rest API
 """
-import requests
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 import pandas as pd
@@ -80,4 +79,5 @@ async def predict(inference: InputData):
 
     preds = model.predict(X_test)
     return {"salary": int(preds)}
+
 
