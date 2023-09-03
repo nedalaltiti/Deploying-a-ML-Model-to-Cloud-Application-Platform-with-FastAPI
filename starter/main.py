@@ -1,13 +1,14 @@
 """
 This script for Rest API
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from pydantic import BaseModel, Field
 import pandas as pd
-import numpy as np
 from starter.ml.data import process_data
 import logging, pickle
 import os
+import json
+import numpy as np
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -76,8 +77,20 @@ async def predict(inference: InputData):
         X_test, categorical_features=cat_features, training=False, encoder=encoder, lb=lb
     )
     
-
-    preds = model.predict(X_test)
-    return {"salary": int(preds)}
+    preds = model.predict(X_test)    
+    # Convert prediction to label and add to data output
+    if preds[0] > 0.5:
+        salary = '>50K'
+    else:
+        salary = '<=50K'
+    
+    inference.dict()['salary'] = salary
+    
+    # Convert numpy.int64 to int
+    inference_dict = {k: int(v) if isinstance(v, np.int64) else v for k, v in inference.dict().items()}
+    
+    inference_dict['salary'] = salary
+    return inference_dict
+    # return Response(content=json.dumps(preds.tolist()), media_type="application/json")
 
 

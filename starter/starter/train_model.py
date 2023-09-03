@@ -146,4 +146,30 @@ for feature in cat_features:
 
 
 
-unique_values, counts = np.unique(y_test, return_counts=True)
+# unique_values, counts = np.unique(y_test, return_counts=True)
+
+
+cols = ["age",
+"workclass",
+"fnlgt",
+"education",
+"education-num",
+"marital-status",
+"occupation",
+"relationship",
+"race",
+"sex",
+"capital-gain",
+"capital-loss",
+"hours-per-week",
+"native-country"]
+
+# X_test_df = pd.DataFrame(X_test, columns=cols[:X_test.shape[1]])
+
+# # Find a sample with y equals 1
+# sample_index = np.where(preds == 1)[0][0]
+# sample = X_test_df.iloc[sample_index]
+
+# # Print the sample
+# print("Sample with y equals 1:")
+# print(sample)

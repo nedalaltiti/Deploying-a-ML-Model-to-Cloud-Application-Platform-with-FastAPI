@@ -15,23 +15,23 @@ def test_say_welcome():
 
 def test_high_predictions():
     response = client.post("/inference/", 
-                json={"age": 54,
+                json={"age": 37,
                       "workclass": "Private",
-                      "fnlgt": 220098,
-                      "education": "HS-grad",
-                      "education-num": 9,
+                      "fnlgt": 280464,
+                      "education": "Some-college",
+                      "education-num": 10,
                       "marital-status": "Married-civ-spouse",
-                      "occupation": "Other-service",
-                      "relationship": "Wife",
-                      "race": "White",
-                      "sex": "Female",
+                      "occupation": "Exec-managerial",
+                      "relationship": "Husband",
+                      "race": "Black",
+                      "sex": "Male",
                       "capital-gain": 0,
                       "capital-loss": 0,
-                      "hours-per-week": 40,
+                      "hours-per-week": 80,
                       "native-country": "United-States"})
     
     assert response.status_code == 200, "Expected status code 200"
-    assert response.json()["salary"] == 0, "Expected salary to be less than 50K"
+    assert response.json()["salary"] == '<=50K', "Expected salary to be higher than 50K"
 
 def test_low_predictions():
     response = client.post("/inference/",
@@ -51,7 +51,7 @@ def test_low_predictions():
                       "native-country": "United-States"})
 
     assert response.status_code == 200, "Expected status code 200"
-    assert response.json()["salary"] == 0, "Expected salary to be less than 50K"
+    assert response.json()["salary"] == "<=50K", "Expected salary to be less than or equal 50K"
 
 
 def test_wrong_inference_query():
